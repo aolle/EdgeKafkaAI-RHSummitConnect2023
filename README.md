@@ -1,1 +1,1 @@
-# rh-summit-connect-2023
+# EdgeKafkaIA-RHSummitConnect2023
