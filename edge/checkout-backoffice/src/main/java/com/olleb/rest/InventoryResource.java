@@ -7,26 +7,26 @@ import org.jboss.resteasy.reactive.RestStreamElementType;
 
 import com.olleb.model.Product;
 
+import io.quarkus.logging.Log;
 import io.smallrye.mutiny.Multi;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/inventory")
 public class InventoryResource {
-
-    // @Inject
-    // InventoryProcessor inventoryProcessor;
 
     @Inject
     @Channel("inventory-channel")
     Multi<List<Product>> inventory;
 
     @GET
+    @Produces(MediaType.SERVER_SENT_EVENTS)
     @RestStreamElementType(MediaType.APPLICATION_JSON)
     public Multi<List<Product>> getInventory() {
-        // return inventoryProcessor.getProductList();
+        Log.debug("Sending event...");
         return inventory;
     }
 }
