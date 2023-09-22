@@ -12,7 +12,6 @@ import io.smallrye.mutiny.Multi;
 import jakarta.inject.Inject;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
 @Path("/inventory")
@@ -23,7 +22,8 @@ public class InventoryResource {
     Multi<List<Product>> inventory;
 
     @GET
-    @Produces(MediaType.SERVER_SENT_EVENTS)
+    // not needed when use RestStreamElementType
+    // @Produces(MediaType.SERVER_SENT_EVENTS)
     @RestStreamElementType(MediaType.APPLICATION_JSON)
     public Multi<List<Product>> getInventory() {
         Log.debug("Sending event...");
