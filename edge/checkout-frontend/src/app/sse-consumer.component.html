@@ -1,0 +1,33 @@
+<!-- <h2>Inventory</h2>
+<ul>
+  <li *ngFor="let item of inventory">
+    {{ item.name }} - {{ item.quantity }}
+  </li>
+</ul> -->
+
+<div class="checkout-container">
+  <div class="left-panel">
+    <div class="product" *ngFor="let product of products" (click)="openPopup(product)">
+      {{ product.name }}
+    </div>
+  </div>
+
+  <div class="right-panel">
+    <div class="selected-product" *ngFor="let selectedProduct of selectedProducts">
+      {{ selectedProduct.name }} ({{ selectedProduct.quantity }})
+    </div>
+    <button class="checkout-button-left" (click)="checkout()">Checkout</button>
+  </div>
+</div>
+
+<div class="popup" *ngIf="showPopup">
+  <div class="popup-content">
+    <h3>{{ selectedProduct.name }}</h3>
+    <div class="quantity">
+      <button (click)="decrementQuantity()">-</button>
+      <span>{{ selectedQuantity }}</span>
+      <button (click)="incrementQuantity()">+</button>
+    </div>
+    <button (click)="addProduct()">OK</button>
+  </div>
+</div>

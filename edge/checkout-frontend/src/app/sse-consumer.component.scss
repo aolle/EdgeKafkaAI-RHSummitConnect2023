@@ -1,0 +1,97 @@
+.checkout-container {
+    display: flex;
+    height: 100vh;
+    justify-content: space-between;
+}
+
+.left-panel {
+    flex: 0.7;
+    background-color: #f2f2f2;
+    padding: 20px;
+    overflow-y: auto;
+}
+
+.right-panel {
+    flex: 0.3;
+    background-color: #ffffff;
+    padding: 20px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.product {
+    cursor: pointer;
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #ddd;
+    border-radius: 6px;
+}
+
+.selected-product {
+    margin-bottom: 10px;
+    padding: 10px;
+    background-color: #f2f2f2;
+    border-radius: 6px;
+}
+
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1;
+}
+
+.popup-content {
+    background-color: #ffffff;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+}
+
+.quantity {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0;
+}
+
+.quantity button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 0 10px;
+}
+
+.popup button {
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+}
+
+.checkout-button-left {
+    background-color: #3498db;
+    color: #fff;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.checkout-button-left:hover {
+    background-color: #2980b9;
+}
