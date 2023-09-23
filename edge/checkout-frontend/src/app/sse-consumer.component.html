@@ -8,6 +8,7 @@
 <div class="checkout-container">
   <div class="left-panel">
     <div class="product" *ngFor="let product of products" (click)="openPopup(product)">
+      <div class="product-image"></div>
       {{ product.name }}
     </div>
   </div>
@@ -17,6 +18,7 @@
       {{ selectedProduct.name }} ({{ selectedProduct.quantity }})
     </div>
     <button class="checkout-button-left" (click)="checkout()">Checkout</button>
+    <button class="reset-button" (click)="reset()">Restart</button>
   </div>
 </div>
 

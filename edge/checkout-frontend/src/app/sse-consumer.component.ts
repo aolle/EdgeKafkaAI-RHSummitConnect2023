@@ -8,6 +8,7 @@ import { SseService } from './sse.service';
 })
 export class SseConsumerComponent implements OnInit {
   inventory: any[] = [];
+  products: any[] = [];
 
   constructor(private sseService: SseService) { }
 
@@ -17,18 +18,14 @@ export class SseConsumerComponent implements OnInit {
     const eventSource = this.sseService.connectToSseEndpoint(endpointUrl);
 
     eventSource.addEventListener('message', (event: MessageEvent) => {
-      console.log("JSON event: " + event.data);
       const eventData = JSON.parse(event.data);
-      this.inventory = eventData[0];
-      console.log("Inventory: " + this.inventory);
+
+      if (this.inventory.length == 0) {
+        this.inventory = eventData[0];
+      }
+      this.products = eventData[0];
     });
   }
-
-  products: any[] = [
-    { id: 1, name: 'Prod1' },
-    { id: 2, name: 'Prod2' },
-    { id: 3, name: 'Prod3' },
-  ];
 
   selectedProducts: any[] = [];
   showPopup: boolean = false;
@@ -57,10 +54,16 @@ export class SseConsumerComponent implements OnInit {
 
   addProduct() {
     if (this.selectedProduct && this.selectedQuantity > 0) {
-      this.selectedProducts.push({
-        name: this.selectedProduct.name,
-        quantity: this.selectedQuantity
-      });
+      const existingProduct = this.selectedProducts.find(product => product.name === this.selectedProduct.name);
+
+      if (existingProduct) {
+        existingProduct.quantity += this.selectedQuantity;
+      } else {
+        this.selectedProducts.push({
+          name: this.selectedProduct.name,
+          quantity: this.selectedQuantity
+        });
+      }
 
       this.showPopup = false;
     }
@@ -69,4 +72,9 @@ export class SseConsumerComponent implements OnInit {
   checkout() {
 
   }
+
+  reset() {
+    this.selectedProducts = [];
+  }
+
 }
