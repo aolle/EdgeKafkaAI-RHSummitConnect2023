@@ -1,11 +1,15 @@
 package com.olleb.model;
 
 public class Product {
+
+    private static Long currentId = 1L;
+    private Long id;
     private String name;
 
     private int quantity;
 
     private Product(Builder builder) {
+        this.id = currentId++;
         this.name = builder.name;
         this.quantity = builder.quantity;
     }
@@ -16,6 +20,14 @@ public class Product {
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     public static class Builder {
