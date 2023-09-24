@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { SseConsumerComponent } from './sse-consumer.component';
+import { CheckoutComponent } from './checkout.component';
 
 const routes: Routes = [
-  { path: 'checkout', component: SseConsumerComponent },
+  { path: 'checkout', component: CheckoutComponent },
 ];
 
 @NgModule({

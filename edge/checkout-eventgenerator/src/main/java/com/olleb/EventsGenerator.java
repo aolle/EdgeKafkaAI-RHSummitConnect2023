@@ -5,6 +5,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
 
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 
 import com.olleb.model.Product;
@@ -17,7 +18,8 @@ public class EventsGenerator {
 
     private static final Random random = new Random();
 
-    private boolean initialInventoryEmitted = false;
+    @ConfigProperty(name = "app.message.interval", defaultValue = "60")
+    int messagingInterval;
 
     private static final List<Product> products = List.of(
             new Product.Builder().withName("LED Desk Lamp").withQuantity(10).build(),
@@ -27,30 +29,25 @@ public class EventsGenerator {
             new Product.Builder().withName("Apples").withQuantity(30).build(),
             new Product.Builder().withName("Glass").withQuantity(25).build());
 
-    @Outgoing("inventory-channel")
-    public Multi<List<Product>> generateInventory() {
-
-        return Multi.createFrom().ticks().every(Duration.ofSeconds(20))
+    @Outgoing("checkout")
+    public Multi<List<Product>> updateInventory() {
+        return Multi.createFrom().ticks().every(Duration.ofSeconds(messagingInterval))
                 .onOverflow().drop()
                 .map(p -> {
-                    if (!initialInventoryEmitted) {
-                        initialInventoryEmitted = true;
-                        return products;
-                    } else {
-                        return randomizeQuantities();
-                    }
-
+                    return randomizeQuantities();
                 });
 
     }
 
-    // @Outgoing("inventory-channel")
-    // public Uni<List<Product>> initialInventory() {
-    // return Uni.createFrom()
-    // .item(() -> {
-    // return products;
-    // });
-    // }
+    @Outgoing("inventory")
+    public Multi<List<Product>> initialInventory() {
+        return Multi.createFrom().ticks().every(Duration.ofSeconds(messagingInterval))
+                .onOverflow().drop()
+                .map(p -> {
+                    return products;
+                });
+
+    }
 
     private static List<Product> randomizeQuantities() {
         List<Product> list = new LinkedList<>();
@@ -59,8 +56,7 @@ public class EventsGenerator {
             int originalQuantity = product.getQuantity();
             int randomizedQuantity = random.nextInt(originalQuantity + 1);
 
-            product.setQuantity(randomizedQuantity);
-            list.add(product);
+            list.add(new Product.Builder().withName(product.getName()).withQuantity(randomizedQuantity).build());
         }
         return list;
     }

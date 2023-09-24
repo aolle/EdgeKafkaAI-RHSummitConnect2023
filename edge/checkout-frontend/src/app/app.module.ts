@@ -3,16 +3,16 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { SseConsumerComponent } from './sse-consumer.component';
+import { CheckoutComponent } from './checkout.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    SseConsumerComponent,
+    CheckoutComponent,
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
