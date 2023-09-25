@@ -1,6 +1,8 @@
 package com.olleb;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Random;
@@ -18,8 +20,16 @@ public class EventsGenerator {
 
     private static final Random random = new Random();
 
-    @ConfigProperty(name = "app.message.interval", defaultValue = "60")
+    @ConfigProperty(name = "app.message.checkout.interval", defaultValue = "5")
     int messagingInterval;
+
+    @ConfigProperty(name = "app.message.initial.interval", defaultValue = "1")
+    int messagingInitialInterval;
+
+    @ConfigProperty(name = "app.events.same.enabled", defaultValue = "true")
+    boolean eventsSame;
+
+    private static final int MAX_CHECKOUT_ITEMS = 3;
 
     private static final List<Product> products = List.of(
             new Product.Builder().withName("LED Desk Lamp").withQuantity(10).build(),
@@ -29,19 +39,24 @@ public class EventsGenerator {
             new Product.Builder().withName("Apples").withQuantity(30).build(),
             new Product.Builder().withName("Glass").withQuantity(25).build());
 
+    private List<Product> checkoutList = Collections.emptyList();
+
     @Outgoing("checkout")
     public Multi<List<Product>> updateInventory() {
         return Multi.createFrom().ticks().every(Duration.ofSeconds(messagingInterval))
                 .onOverflow().drop()
                 .map(p -> {
-                    return randomizeQuantities();
+                    if (eventsSame) {
+                        return selectAndDecreaseQuantities();
+                    } else {
+                        return randomizeQuantities();
+                    }
                 });
-
     }
 
     @Outgoing("inventory")
     public Multi<List<Product>> initialInventory() {
-        return Multi.createFrom().ticks().every(Duration.ofSeconds(messagingInterval))
+        return Multi.createFrom().ticks().every(Duration.ofSeconds(messagingInitialInterval))
                 .onOverflow().drop()
                 .map(p -> {
                     return products;
@@ -49,7 +64,33 @@ public class EventsGenerator {
 
     }
 
-    private static List<Product> randomizeQuantities() {
+    private List<Product> selectAndDecreaseQuantities() {
+        if (!checkoutList.isEmpty()) {
+            return checkoutList;
+        }
+
+        checkoutList = new ArrayList<>(MAX_CHECKOUT_ITEMS);
+
+        List<Product> shuffledProducts = new ArrayList<>(products);
+        Collections.shuffle(shuffledProducts);
+
+        for (int i = 0; i < MAX_CHECKOUT_ITEMS && i < shuffledProducts.size(); i++) {
+            Product originalProduct = shuffledProducts.get(i);
+            int originalQuantity = originalProduct.getQuantity();
+            int decreaseAmount = random.nextInt(originalQuantity + 1);
+
+            Product modifiedProduct = new Product.Builder()
+                    .withName(originalProduct.getName())
+                    .withQuantity(originalQuantity - decreaseAmount)
+                    .build();
+
+            checkoutList.add(modifiedProduct);
+        }
+
+        return checkoutList;
+    }
+
+    private List<Product> randomizeQuantities() {
         List<Product> list = new LinkedList<>();
 
         for (Product product : products) {
