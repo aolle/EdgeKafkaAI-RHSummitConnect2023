@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SseService } from './sse.service';
+import { Product } from './models/product';
 
 @Component({
   selector: 'checkout',
@@ -7,6 +8,8 @@ import { SseService } from './sse.service';
   styleUrls: ['./checkout.component.scss']
 })
 export class CheckoutComponent implements OnInit {
+  isLoading: boolean = true;
+
   inventory: any[] = [];
   products: any[] = [];
 
@@ -14,6 +17,9 @@ export class CheckoutComponent implements OnInit {
   showPopup: boolean = false;
   selectedProduct: any;
   selectedQuantity: number = 1;
+
+  showPopupCheckout = false;
+  popupCheckoutMessage = '';
 
   constructor(private sseService: SseService) { }
 
@@ -33,8 +39,10 @@ export class CheckoutComponent implements OnInit {
     eventInventorySource.addEventListener('message', (event: MessageEvent) => {
       const eventData = JSON.parse(event.data);
       this.inventory = eventData[0];
+      if(this.isLoading) {
+        this.isLoading = false;
+      }
     });
-
 
   }
 
@@ -83,11 +91,30 @@ export class CheckoutComponent implements OnInit {
   }
 
   checkout() {
+    if (this.arraysAreEqual(this.products, this.selectedProducts)) {
+      this.showCheckoutPopupMessage("OK");
 
+    } else {
+      this.showCheckoutPopupMessage("Missing item(s)");
+    }
   }
 
   reset() {
     this.selectedProducts = [];
+  }
+
+  arraysAreEqual(array1: Product[], array2: Product[]) {
+    return JSON.stringify(array1) === JSON.stringify(array2);
+  }
+
+  showCheckoutPopupMessage(message: string) {
+    this.popupCheckoutMessage = message;
+    this.showPopupCheckout = true;
+  }
+
+  closeCheckoutPopup() {
+    this.showPopupCheckout = false;
+    this.popupCheckoutMessage = '';
   }
 
 }

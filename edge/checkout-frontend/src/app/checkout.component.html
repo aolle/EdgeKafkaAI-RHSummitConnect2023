@@ -1,3 +1,9 @@
+<div *ngIf="isLoading" class="loading-overlay">
+  <div class="loading-indicator">
+    Loading products...
+  </div>
+</div>
+
 <div class="checkout-container">
   <div class="left-panel">
     <div class="product" *ngFor="let product of inventory" (click)="openPopup(product)">
@@ -24,5 +30,12 @@
       <button (click)="incrementQuantity()">+</button>
     </div>
     <button (click)="addProduct()">OK</button>
+  </div>
+</div>
+
+<div *ngIf="showPopupCheckout" class="popup">
+  <div class="popup-content">
+    <p>{{ popupCheckoutMessage }}</p>
+    <button (click)="closeCheckoutPopup()">Close</button>
   </div>
 </div>
