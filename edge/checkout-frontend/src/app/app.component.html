@@ -1,6 +1,10 @@
 <div class="welcome-container" *ngIf="showContent">
-  <h1 class="welcome-title">SELF CHECKOUT</h1>
-  <button (click)="toggleContent()" class="checkout-button">Start</button>
+  <h1 class="welcome-title">
+    <span class="thin-text">Begin </span>
+    <button (click)="toggleContent()" class="checkout-button">Checkout</button>
+    <span class="thin-text"> Now</span>
+  </h1>
+
 </div>
 
 <router-outlet></router-outlet>

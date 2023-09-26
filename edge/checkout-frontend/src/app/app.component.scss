@@ -24,13 +24,21 @@
 .checkout-button {
     background-color: #3498db;
     color: #fff;
-    padding: 12px 20px;
+    padding: 9px 25px;
     border: none;
-    border-radius: 6px;
+    // border-radius: 6px;
     cursor: pointer;
-    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    // box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2);
+    font-size: 2rem;
+    font-weight: bold;
+
 }
 
 .checkout-button:hover {
     background-color: #2980b9;
+}
+
+.thin-text {
+    font-size: 2rem;
+    font-weight: 300;
 }

@@ -39,7 +39,7 @@ export class CheckoutComponent implements OnInit {
     eventInventorySource.addEventListener('message', (event: MessageEvent) => {
       const eventData = JSON.parse(event.data);
       this.inventory = eventData[0];
-      if(this.isLoading) {
+      if (this.isLoading) {
         this.isLoading = false;
       }
     });
