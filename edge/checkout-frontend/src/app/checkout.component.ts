@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { SseService } from './sse.service';
 import { Product } from './models/product';
 
+import { environment } from '../environments/environment';
+
 @Component({
   selector: 'checkout',
   templateUrl: './checkout.component.html',
@@ -25,8 +27,8 @@ export class CheckoutComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const inventoryEndpointUrl = 'http://localhost:8080/inventory';
-    const updatesEndpointUrl = 'http://localhost:8080/inventory/updates';
+    const inventoryEndpointUrl = environment.inventoryEndpointUrl;
+    const updatesEndpointUrl = environment.updatesEndpointUrl;
 
     const eventInventoryUpdatesSource = this.sseService.connectToSseEndpoint(updatesEndpointUrl);
     const eventInventorySource = this.sseService.connectToSseEndpoint(inventoryEndpointUrl);
