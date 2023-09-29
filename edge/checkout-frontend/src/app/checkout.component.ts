@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { SseService } from './sse.service';
-import { Product } from './models/product';
 
 import { environment } from '../environments/environment';
 
@@ -16,6 +15,8 @@ export class CheckoutComponent implements OnInit {
   products: any[] = [];
 
   selectedProducts: any[] = [];
+  missingProducts: any[] = [];
+
   showPopup: boolean = false;
   selectedProduct: any;
   selectedQuantity: number = 1;
@@ -109,7 +110,7 @@ export class CheckoutComponent implements OnInit {
       return !this.products.some(product => product.id === selectedProduct.id);
     });
 
-    const missingItems = this.products.filter(product => {
+    const missingProducts = this.products.filter(product => {
       const selectedProduct = this.selectedProducts.find(selected => selected.id === product.id);
       return !selectedProduct || selectedProduct.quantity < product.quantity;
     });
@@ -123,13 +124,36 @@ export class CheckoutComponent implements OnInit {
       this.showCheckoutPopupMessage("Please select items before checking out.");
     } else if (hasIncorrectProducts) {
       this.showCheckoutPopupMessage("You have selected an incorrect set of products.");
-    } else if (missingItems.length === 0) {
+    } else if (missingProducts.length === 0) {
       this.showCheckoutPopupMessage("OK");
     } else if (hasExcessQuantities) {
       this.showCheckoutPopupMessage("Please review your cart. Excess quantity selected.");
     } else {
+      this.missingProducts = this.calculateQuantityDifference();
       this.showCheckoutPopupMessage("Missing items or quantity!!");
     }
+  }
+
+  calculateQuantityDifference() {
+    const quantityDifference: { id: number, name: string, difference: number }[] = [];
+
+    for (const product of this.products) {
+      const selectedProduct = this.selectedProducts.find(sp => sp.id === product.id) || { quantity: 0 };
+      const difference = product.quantity - selectedProduct.quantity;
+
+      if (difference !== 0) {
+        quantityDifference.push({ id: product.id, name: product.name, difference });
+      }
+    }
+
+    for (const selectedProduct of this.selectedProducts) {
+      const product = this.products.find(p => p.id === selectedProduct.id);
+      if (!product) {
+        quantityDifference.push({ id: selectedProduct.id, name: selectedProduct.name, difference: -selectedProduct.quantity });
+      }
+    }
+
+    return quantityDifference;
   }
 
   reset() {
@@ -142,6 +166,7 @@ export class CheckoutComponent implements OnInit {
   }
 
   closeCheckoutPopup() {
+    this.missingProducts = [];
     this.showPopupCheckout = false;
     this.popupCheckoutMessage = '';
   }

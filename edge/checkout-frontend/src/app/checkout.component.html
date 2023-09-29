@@ -36,6 +36,11 @@
 <div *ngIf="showPopupCheckout" class="popup">
   <div class="popup-content">
     <p>{{ popupCheckoutMessage }}</p>
+    <ul *ngIf="missingProducts.length > 0">
+      <li *ngFor="let product of missingProducts" class="left-align-list">
+        {{ product.name }} ({{product.difference}})
+      </li>
+    </ul>
     <button (click)="closeCheckoutPopup()">Close</button>
   </div>
 </div>
