@@ -33,11 +33,13 @@ export class CheckoutComponent implements OnInit {
     const eventInventoryUpdatesSource = this.sseService.connectToSseEndpoint(updatesEndpointUrl);
     const eventInventorySource = this.sseService.connectToSseEndpoint(inventoryEndpointUrl);
 
+    // checkout
     eventInventoryUpdatesSource.addEventListener('message', (event: MessageEvent) => {
       const eventData = JSON.parse(event.data);
       this.products = eventData[0];
     });
 
+    // initial inventory
     eventInventorySource.addEventListener('message', (event: MessageEvent) => {
       const eventData = JSON.parse(event.data);
       this.inventory = eventData[0];
@@ -83,6 +85,7 @@ export class CheckoutComponent implements OnInit {
         existingProduct.quantity += this.selectedQuantity;
       } else {
         this.selectedProducts.push({
+          id: this.selectedProduct.id,
           name: this.selectedProduct.name,
           quantity: this.selectedQuantity
         });
@@ -93,20 +96,44 @@ export class CheckoutComponent implements OnInit {
   }
 
   checkout() {
-    if (this.arraysAreEqual(this.products, this.selectedProducts)) {
-      this.showCheckoutPopupMessage("OK");
+    console.log("Products: " + JSON.stringify(this.products) + "\nSelected: " + JSON.stringify(this.selectedProducts));
 
+    if (this.products.length === 0) {
+      this.showCheckoutPopupMessage("Please wait while the system is loading.");
+      return;
+    }
+
+    const hasSelectedItems = this.selectedProducts.length > 0;
+
+    const hasIncorrectProducts = this.selectedProducts.some(selectedProduct => {
+      return !this.products.some(product => product.id === selectedProduct.id);
+    });
+
+    const missingItems = this.products.filter(product => {
+      const selectedProduct = this.selectedProducts.find(selected => selected.id === product.id);
+      return !selectedProduct || selectedProduct.quantity < product.quantity;
+    });
+
+    const hasExcessQuantities = this.selectedProducts.some(selectedProduct => {
+      const product = this.products.find(p => p.id === selectedProduct.id);
+      return product && selectedProduct.quantity > product.quantity;
+    });
+
+    if (!hasSelectedItems) {
+      this.showCheckoutPopupMessage("Please select items before checking out.");
+    } else if (hasIncorrectProducts) {
+      this.showCheckoutPopupMessage("You have selected an incorrect set of products.");
+    } else if (missingItems.length === 0) {
+      this.showCheckoutPopupMessage("OK");
+    } else if (hasExcessQuantities) {
+      this.showCheckoutPopupMessage("Please review your cart. Excess quantity selected.");
     } else {
-      this.showCheckoutPopupMessage("Missing item(s)");
+      this.showCheckoutPopupMessage("Missing items or quantity!!");
     }
   }
 
   reset() {
     this.selectedProducts = [];
-  }
-
-  arraysAreEqual(array1: Product[], array2: Product[]) {
-    return JSON.stringify(array1) === JSON.stringify(array2);
   }
 
   showCheckoutPopupMessage(message: string) {
