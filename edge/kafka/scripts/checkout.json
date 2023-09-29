@@ -1,1 +1,1 @@
-[{"id":7,"name":"Book","quantity":2},{"id":8,"name":"Bottle","quantity":3},{"id":9,"name":"LED Desk Lamp","quantity":5}]
+[{"id":2,"name":"Book","quantity":2,"price":5.75,"image":""},{"id":3,"name":"Bottle","quantity":3,"price":1.25,"image":""},{"id":1,"name":"LED Desk Lamp","quantity":5,"price":12.5,"image":""}]

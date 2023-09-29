@@ -7,11 +7,15 @@ public class Product {
     private String name;
 
     private int quantity;
+    private double price;
+    private String image;
 
     private Product(Builder builder) {
         this.id = currentId++;
         this.name = builder.name;
         this.quantity = builder.quantity;
+        this.price = builder.price;
+        this.image = builder.image;
     }
 
     public String getName() {
@@ -26,6 +30,14 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public double getPrice() {
+        return price;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
     public Long getId() {
         return id;
     }
@@ -33,6 +45,8 @@ public class Product {
     public static class Builder {
         private String name;
         private int quantity = 1;
+        private double price = .0;
+        private String image = "";
 
         public Builder withName(String name) {
             this.name = name;
@@ -41,6 +55,16 @@ public class Product {
 
         public Builder withQuantity(int quantity) {
             this.quantity = quantity;
+            return this;
+        }
+
+        public Builder withPrice(double price) {
+            this.price = price;
+            return this;
+        }
+
+        public Builder withImage(String image) {
+            this.image = image;
             return this;
         }
 

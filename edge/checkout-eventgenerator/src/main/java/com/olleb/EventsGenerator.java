@@ -32,12 +32,12 @@ public class EventsGenerator {
     private static final int MAX_CHECKOUT_ITEMS = 3;
 
     private static final List<Product> products = List.of(
-            new Product.Builder().withName("LED Desk Lamp").withQuantity(10).build(),
-            new Product.Builder().withName("Book").withQuantity(20).build(),
-            new Product.Builder().withName("Bottle").withQuantity(15).build(),
-            new Product.Builder().withName("Car Keys").withQuantity(5).build(),
-            new Product.Builder().withName("Apples").withQuantity(30).build(),
-            new Product.Builder().withName("Glass").withQuantity(25).build());
+            new Product.Builder().withName("LED Desk Lamp").withQuantity(10).withPrice(12.5).build(),
+            new Product.Builder().withName("Book").withQuantity(20).withPrice(5.75).build(),
+            new Product.Builder().withName("Bottle").withQuantity(15).withPrice(1.25).build(),
+            new Product.Builder().withName("Car Keys").withQuantity(5).withPrice(25.0).build(),
+            new Product.Builder().withName("Apples").withQuantity(30).withPrice(1).build(),
+            new Product.Builder().withName("Glass").withQuantity(25).withPrice(8.5).build());
 
     private List<Product> checkoutList = Collections.emptyList();
 

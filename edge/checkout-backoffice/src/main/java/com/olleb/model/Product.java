@@ -11,12 +11,26 @@ public class Product {
     @JsonProperty("quantity")
     private int quantity;
 
+    @JsonProperty("price")
+    private double price;
+
+    @JsonProperty("image")
+    private String image;
+
     public String getName() {
         return name;
     }
 
     public int getQuantity() {
         return quantity;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public double getPrice() {
+        return price;
     }
 
     public void setName(String name) {
@@ -27,11 +41,21 @@ public class Product {
         this.quantity = quantity;
     }
 
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public void setPrice(double price) {
+        this.price = price;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
                 "name='" + name + '\'' +
-                ", quantity=" + quantity +
+                ", image=" + image + '\'' +
+                ", quantity=" + quantity + '\'' +
+                ", price=" + price +
                 '}';
     }
 
