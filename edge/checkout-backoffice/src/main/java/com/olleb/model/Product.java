@@ -5,6 +5,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class Product {
+    @JsonProperty("id")
+    private int id;
+
     @JsonProperty("name")
     private String name;
 
@@ -49,9 +52,14 @@ public class Product {
         this.price = price;
     }
 
+    public int getId() {
+        return id;
+    }
+
     @Override
     public String toString() {
         return "Product{" +
+                "id=" + id + '\'' +
                 "name='" + name + '\'' +
                 ", image=" + image + '\'' +
                 ", quantity=" + quantity + '\'' +
