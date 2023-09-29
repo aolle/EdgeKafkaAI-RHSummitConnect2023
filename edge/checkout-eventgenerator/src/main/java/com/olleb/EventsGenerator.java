@@ -80,6 +80,7 @@ public class EventsGenerator {
             int decreaseAmount = random.nextInt(originalQuantity + 1);
 
             Product modifiedProduct = new Product.Builder()
+                    .withId(originalProduct.getId())
                     .withName(originalProduct.getName())
                     .withQuantity(originalQuantity - decreaseAmount)
                     .build();
@@ -97,7 +98,11 @@ public class EventsGenerator {
             int originalQuantity = product.getQuantity();
             int randomizedQuantity = random.nextInt(originalQuantity + 1);
 
-            list.add(new Product.Builder().withName(product.getName()).withQuantity(randomizedQuantity).build());
+            list.add(new Product.Builder()
+                    .withId(product.getId())
+                    .withName(product.getName())
+                    .withQuantity(randomizedQuantity)
+                    .build());
         }
         return list;
     }

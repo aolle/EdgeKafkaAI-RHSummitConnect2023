@@ -2,20 +2,19 @@ package com.olleb.model;
 
 public class Product {
 
-    private static Long currentId = 1L;
-    private Long id;
+    private int id;
     private String name;
 
     private int quantity;
     private double price;
     private String image;
 
-    private Product(Builder builder) {
-        this.id = currentId++;
-        this.name = builder.name;
-        this.quantity = builder.quantity;
-        this.price = builder.price;
-        this.image = builder.image;
+    private Product(int id, String name, int quantity, double price, String image) {
+        this.id = id;
+        this.name = name;
+        this.quantity = quantity;
+        this.price = price;
+        this.image = image;
     }
 
     public String getName() {
@@ -38,11 +37,15 @@ public class Product {
         return image;
     }
 
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
     public static class Builder {
+
+        private static int currentId = 1;
+
+        private int id;
         private String name;
         private int quantity = 1;
         private double price = .0;
@@ -68,8 +71,21 @@ public class Product {
             return this;
         }
 
+        public Builder withId(int id) {
+            this.id = id;
+            return this;
+        }
+
+        private static int generateNewId() {
+            return currentId++;
+        }
+
         public Product build() {
-            return new Product(this);
+            if (this.id == 0) {
+                this.id = generateNewId();
+            }
+            return new Product(id, name, quantity, price, image);
+
         }
     }
 
