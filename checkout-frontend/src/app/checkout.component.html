@@ -7,7 +7,7 @@
 <div class="checkout-container">
   <div class="left-panel">
     <div class="product" *ngFor="let product of inventory" (click)="openPopup(product)">
-      <div class="product-image"></div>
+      <div class="product-image" [ngStyle]="getProductImageStyle(product)"></div>
       {{ product.name }}
     </div>
   </div>

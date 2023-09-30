@@ -171,4 +171,18 @@ export class CheckoutComponent implements OnInit {
     this.popupCheckoutMessage = '';
   }
 
+  getProductImageStyle(product: any) {
+    if (product.image) {
+      return {
+        'background-image': `url('data:image/png;base64,${product.image}')`,
+        'background-size': 'cover',
+        'background-repeat': 'no-repeat',
+      };
+    } else {
+      return {
+        'background-color': '#ffffff',
+      };
+    }
+  }
+
 }
