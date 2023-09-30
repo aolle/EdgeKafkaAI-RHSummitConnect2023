@@ -79,10 +79,15 @@ public class EventsGenerator {
             int originalQuantity = originalProduct.getQuantity();
             int decreaseAmount = random.nextInt(originalQuantity + 1);
 
+            int modifiedQuantity = originalQuantity - decreaseAmount;
+            if (modifiedQuantity <= 0) {
+                modifiedQuantity = 1;
+            }
+
             Product modifiedProduct = new Product.Builder()
                     .withId(originalProduct.getId())
                     .withName(originalProduct.getName())
-                    .withQuantity(originalQuantity - decreaseAmount)
+                    .withQuantity(modifiedQuantity)
                     .build();
 
             checkoutList.add(modifiedProduct);
