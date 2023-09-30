@@ -33,7 +33,6 @@
     margin-right: 10px;
 }
 
-
 .selected-product {
     margin-bottom: 10px;
     padding: 10px;
@@ -135,4 +134,15 @@
 .left-align-list {
     text-align: left;
     list-style-position: inside;
+}
+
+.remove-button {
+    border: none;
+    background: transparent;
+    color: red;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    float: right;
+    margin-left: 10px;
 }

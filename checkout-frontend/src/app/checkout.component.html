@@ -13,8 +13,9 @@
   </div>
 
   <div class="right-panel">
-    <div class="selected-product" *ngFor="let selectedProduct of selectedProducts">
-      {{ selectedProduct.name }} ({{ selectedProduct.quantity }})
+    <div class="selected-product" *ngFor="let selectedProduct of selectedProducts; let i = index">
+      <span>{{ selectedProduct.name }} ({{ selectedProduct.quantity }})</span>
+      <button class="remove-button" (click)="removeProduct(i)">x</button>
     </div>
     <button class="checkout-button-left" (click)="checkout()">Checkout</button>
     <button class="reset-button" (click)="reset()">Restart</button>

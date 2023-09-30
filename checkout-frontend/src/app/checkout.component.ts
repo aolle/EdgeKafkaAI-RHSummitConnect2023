@@ -185,4 +185,8 @@ export class CheckoutComponent implements OnInit {
     }
   }
 
+  removeProduct(index: number) {
+    this.selectedProducts.splice(index, 1);
+  }
+
 }
