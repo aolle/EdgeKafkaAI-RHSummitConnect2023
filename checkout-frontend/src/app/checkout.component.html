@@ -9,7 +9,9 @@
     <h2 class="panel-title">Available Products</h2>
     <div class="product" *ngFor="let product of inventory" (click)="openPopup(product)">
       <div class="product-image" [ngStyle]="getProductImageStyle(product)"></div>
-      {{ product.name }}
+      <span class="product-name">
+        {{ product.name }}
+      </span>
       <span class="product-price">{{ product.price }} EUR</span>
     </div>
   </div>
@@ -20,7 +22,7 @@
       <div class="selected-product-info">
         <div class="product-image-small" [ngStyle]="getProductImageStyle(selectedProduct)">
           <div class="quantity-indicator-container">
-          <span class="quantity-indicator">{{ selectedProduct.quantity }}</span>
+            <span class="quantity-indicator">{{ selectedProduct.quantity }}</span>
           </div>
         </div>
         <span class="product-name">
@@ -36,7 +38,7 @@
 
 <div class="popup" *ngIf="showPopup">
   <div class="popup-content">
-    <h3>{{ selectedProduct.name }}</h3>
+    <h3><span class="product-name">{{ selectedProduct.name }}</span></h3>
     <div class="quantity">
       <button (click)="decrementQuantity()">-</button>
       <span>{{ selectedQuantity }}</span>

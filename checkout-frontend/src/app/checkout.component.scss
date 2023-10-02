@@ -67,13 +67,10 @@
     margin: 20px 0;
 }
 
-.quantity button {
-    background-color: #3498db;
-    color: #fff;
-    border: none;
-    padding: 5px 10px;
-    cursor: pointer;
-    margin: 0 10px;
+.quantity span {
+    background-color: #f2f2f2;
+    padding: 5px;
+    font-weight: bold;
 }
 
 .popup button {
@@ -82,6 +79,16 @@
     border: none;
     padding: 10px 20px;
     cursor: pointer;
+}
+
+.quantity button {
+    background-color: #ffffff;
+    color: #000;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    margin: 0 10px;
+    font-weight: bold;
 }
 
 .checkout-button-left {
@@ -140,7 +147,7 @@
 .remove-button {
     border: none;
     background: transparent;
-    color: red;
+    color: black;
     font-weight: bold;
     font-size: 1.2rem;
     cursor: pointer;
@@ -207,5 +214,6 @@
 }
 
 .product-name {
+    text-transform: capitalize;
     flex: 1;
 }
