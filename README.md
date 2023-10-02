@@ -6,7 +6,7 @@ This repository houses the implementation of the demo showcased at the RedHat | 
 
 In this demo, we delve into the integration of various technologies, including:
 
-- Intel HW
+- Intel Core
 - OpenVINO
 - Red Hat AMQ Streams
 - Red Hat Device Edge
