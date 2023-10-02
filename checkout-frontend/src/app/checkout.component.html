@@ -17,8 +17,17 @@
   <div class="right-panel">
     <h2 class="panel-title">Selected Products</h2>
     <div class="selected-product" *ngFor="let selectedProduct of selectedProducts; let i = index">
-      <span>{{ selectedProduct.name }} ({{ selectedProduct.quantity }})</span>
-      <button class="remove-button" (click)="removeProduct(i)">x</button>
+      <div class="selected-product-info">
+        <div class="product-image-small" [ngStyle]="getProductImageStyle(selectedProduct)">
+          <div class="quantity-indicator-container">
+          <span class="quantity-indicator">{{ selectedProduct.quantity }}</span>
+          </div>
+        </div>
+        <span class="product-name">
+          {{ selectedProduct.name }}
+        </span>
+        <button class="remove-button" (click)="removeProduct(i)">x</button>
+      </div>
     </div>
     <button class="checkout-button-left" (click)="checkout()">Checkout</button>
     <button class="reset-button" (click)="reset()">Restart</button>

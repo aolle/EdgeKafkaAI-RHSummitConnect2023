@@ -171,10 +171,20 @@ export class CheckoutComponent implements OnInit {
     this.popupCheckoutMessage = '';
   }
 
-  getProductImageStyle(product: any) {
-    if (product.image) {
+  getProductImageStyle(selectedProduct: any) {
+    let imageBase64 = '';
+    if (selectedProduct.image) {
+      imageBase64 = `url('data:image/png;base64,${selectedProduct.image}')`;
+    } else {
+      const product = this.inventory.find((p: any) => p.id === selectedProduct.id);
+      if (product?.image) {
+        imageBase64 = `url('data:image/png;base64,${product.image}')`;
+      }
+    }
+
+    if (imageBase64) {
       return {
-        'background-image': `url('data:image/png;base64,${product.image}')`,
+        'background-image': imageBase64,
         'background-size': 'cover',
         'background-repeat': 'no-repeat',
       };
