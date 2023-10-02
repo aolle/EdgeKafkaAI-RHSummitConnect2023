@@ -6,13 +6,16 @@
 
 <div class="checkout-container">
   <div class="left-panel">
+    <h2 class="panel-title">Available Products</h2>
     <div class="product" *ngFor="let product of inventory" (click)="openPopup(product)">
       <div class="product-image" [ngStyle]="getProductImageStyle(product)"></div>
       {{ product.name }}
+      <span class="product-price">{{ product.price }} EUR</span>
     </div>
   </div>
 
   <div class="right-panel">
+    <h2 class="panel-title">Selected Products</h2>
     <div class="selected-product" *ngFor="let selectedProduct of selectedProducts; let i = index">
       <span>{{ selectedProduct.name }} ({{ selectedProduct.quantity }})</span>
       <button class="remove-button" (click)="removeProduct(i)">x</button>
