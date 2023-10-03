@@ -1,9 +1,9 @@
-.PHONY: stop-kafka-podman run-kafka-podman
+.PHONY: stop-kafka-podman start-kafka-podman
 
 stop-kafka-podman:
 	podman-compose -f podman/container-compose.yaml down
 
-run-kafka-podman:
+start-kafka-podman:
 	podman-compose -f podman/container-compose.yaml up
 
-kafka-podman: run-kafka-podman
+kafka-podman: start-kafka-podman
