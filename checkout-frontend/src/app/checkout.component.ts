@@ -124,7 +124,7 @@ export class CheckoutComponent implements OnInit {
       this.showCheckoutPopupMessage("Please select items before checking out.");
     } else if (hasIncorrectProducts) {
       this.showCheckoutPopupMessage("You have selected an incorrect set of products.");
-    } else if (missingProducts.length === 0) {
+    } else if (missingProducts.length === 0 && !hasExcessQuantities) {
       this.showCheckoutPopupMessage("OK");
     } else if (hasExcessQuantities) {
       this.showCheckoutPopupMessage("Please review your cart. Excess quantity selected.");
