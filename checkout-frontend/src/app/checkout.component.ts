@@ -24,6 +24,9 @@ export class CheckoutComponent implements OnInit {
   showPopupCheckout = false;
   popupCheckoutMessage = '';
 
+  showWarning = false;
+  showOK = false;
+
   constructor(private sseService: SseService) { }
 
   ngOnInit(): void {
@@ -125,12 +128,14 @@ export class CheckoutComponent implements OnInit {
     } else if (hasIncorrectProducts) {
       this.showCheckoutPopupMessage("You have selected an incorrect set of products.");
     } else if (missingProducts.length === 0 && !hasExcessQuantities) {
-      this.showCheckoutPopupMessage("OK");
+      this.showOK = true;
+      this.showCheckoutPopupMessage("Thank you for Your Purchase");
     } else if (hasExcessQuantities) {
       this.showCheckoutPopupMessage("Please review your cart. Excess quantity selected.");
     } else {
       this.missingProducts = this.calculateQuantityDifference();
-      this.showCheckoutPopupMessage("Missing items or quantity!!");
+      this.showWarning = true;
+      this.showCheckoutPopupMessage("Missing items or quantity");
     }
   }
 
@@ -169,6 +174,8 @@ export class CheckoutComponent implements OnInit {
     this.missingProducts = [];
     this.showPopupCheckout = false;
     this.popupCheckoutMessage = '';
+    this.showWarning = false;
+    this.showOK = false;
   }
 
   getProductImageStyle(selectedProduct: any) {

@@ -50,6 +50,8 @@
 
 <div *ngIf="showPopupCheckout" class="popup">
   <div class="popup-content">
+    <p [ngClass]="{'warning-text': showWarning}" *ngIf="showWarning">WARNING</p>
+    <p [ngClass]="{'ok-text': showOK}" *ngIf="showOK">CHECKOUT COMPLETED</p>
     <p>{{ popupCheckoutMessage }}</p>
     <ul *ngIf="missingProducts.length > 0">
       <li *ngFor="let product of missingProducts" class="left-align-list">

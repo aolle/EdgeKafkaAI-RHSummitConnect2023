@@ -217,3 +217,27 @@
     text-transform: capitalize;
     flex: 1;
 }
+
+.warning-text {
+    font-weight: bold;
+    color: red;
+    font-size: 24px;
+    animation: textAnimation 1s infinite alternate;
+}
+
+.ok-text {
+    font-weight: bold;
+    color: #3498db;
+    font-size: 24px;
+    animation: textAnimation 1s infinite alternate;
+}
+
+@keyframes textAnimation {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
