@@ -28,6 +28,9 @@
         <span class="product-name">
           {{ selectedProduct.name }}
         </span>
+        <span class="product-price">
+          {{ calculateProductPrice(selectedProduct) | currency: 'EUR' }}
+        </span>
         <button class="remove-button" (click)="removeProduct(i)">x</button>
       </div>
     </div>

@@ -3,6 +3,9 @@ import { SseService } from './sse.service';
 
 import { environment } from '../environments/environment';
 
+// TODOs
+// - Refactor many inventory/selectedProducts finds in some functions
+
 @Component({
   selector: 'checkout',
   templateUrl: './checkout.component.html',
@@ -221,6 +224,22 @@ export class CheckoutComponent implements OnInit {
     }
 
     return total;
+  }
+
+  calculateProductPrice(selectedProduct: any): number {
+    let price = selectedProduct.price;
+    if (price === undefined) {
+      const productInInventory = this.inventory.find((product) => product.id === selectedProduct.id);
+      if (productInInventory) {
+        price = productInInventory.price;
+      }
+    }
+
+    if (price !== undefined) {
+      return price * selectedProduct.quantity;
+    }
+
+    return 0;
   }
 
 }
