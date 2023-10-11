@@ -12,7 +12,7 @@
       <span class="product-name">
         {{ product.name }}
       </span>
-      <span class="product-price">{{ product.price }} EUR</span>
+      <span class="product-price">{{ product.price | currency: 'EUR' }}</span>
     </div>
   </div>
 
@@ -31,6 +31,11 @@
         <button class="remove-button" (click)="removeProduct(i)">x</button>
       </div>
     </div>
+    <div *ngIf="selectedProducts.length > 0" class="total-section">
+      <hr class="separator-line" />
+      <p class="total">TOTAL: {{ calculateTotalPrice() | currency: 'EUR' }}</p>
+    </div>
+    <div *ngIf="selectedProducts.length === 0">No items selected for checkout</div>
     <button class="checkout-button-left" (click)="checkout()">Checkout</button>
     <button class="reset-button" (click)="reset()">Restart</button>
   </div>

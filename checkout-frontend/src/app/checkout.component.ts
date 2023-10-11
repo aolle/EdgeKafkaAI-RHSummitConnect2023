@@ -206,4 +206,21 @@ export class CheckoutComponent implements OnInit {
     this.selectedProducts.splice(index, 1);
   }
 
+  calculateTotalPrice(): number {
+    let total = 0;
+
+    for (const selectedProduct of this.selectedProducts) {
+      if (selectedProduct.price) {
+        total += selectedProduct.price * selectedProduct.quantity;
+      } else {
+        const product = this.inventory.find(product => product.id === selectedProduct.id);
+        if (product) {
+          total += product.price * selectedProduct.quantity;
+        }
+      }
+    }
+
+    return total;
+  }
+
 }
